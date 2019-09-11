@@ -1,6 +1,6 @@
 pipeline {
 	environment {
-   	 registry = "maulikjpatel1993/spring-boot-docker-jenkins"
+   	 registry = "maulikjpatel1993/spring-boot-docker-jenkins:latest"
    	 registryCredential = 'docker'
    	 dockerImage = ''
   	}	
@@ -9,7 +9,7 @@ pipeline {
        stage('Building Docker Image') {
 	      steps{
 	       	 script {
-	         	 dockerImage = docker.build(registry + ":$BUILD_NUMBER")
+	         	 dockerImage = docker.build(registry)
 	        }
 	      }
     	}
