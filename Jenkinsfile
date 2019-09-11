@@ -8,24 +8,12 @@ pipeline {
     stages {
        stage('Building Docker Image') {
 	      steps{
+	      	echo 'Starting to build docker image'
 	       	 script {
-	         	 dockerImage = docker.build(registry)
+	         	  def customImage = docker.build("my-image:${env.BUILD_ID}")
+                  customImage.push()
 	        }
 	      }
     	}
-    	stage('Deploy Docker Image') {
-		  steps{
-		    script {
-		      docker.withRegistry( '', registryCredential ) {
-		        dockerImage.push()
-		      }
-		    }
-		  }
-		}
-		stage('Remove Unused docker image') {
-	      steps{
-	        bat "docker rmi $registry:$BUILD_NUMBER"
-	      }
-	    }
     }
 }
